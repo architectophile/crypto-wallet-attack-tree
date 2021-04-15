@@ -9,23 +9,16 @@ import {
   OperatorAnd,
   OperatorOr,
 } from "./common";
-import { AC, AV, PR, TC, UI } from "./cvss";
 import {
   TH_ACCESS_PHYSICALLY,
-  TH_ACCESS_WHEN_UNLOCKED,
   TH_ARP_SPOOFING,
   TH_BRUTE_FORCE,
   TH_BUFFER_OVERFLOW,
-  TH_BYPASS_ACCESS_CONTROL,
-  TH_BYPASS_OS_AUTH,
   TH_BYPASS_USER_CONFIRMATION,
-  TH_CODE_INJECTION,
   TH_COLD_BOOT,
   TH_CONNECT_DEBUGGER,
-  TH_DDoS_ATTACK,
   TH_DECRYPT_DATA,
   TH_DNS_SPOOFING,
-  TH_DUMP_FILES,
   TH_EVIL_MAID,
   TH_EXECUTE_CLIPBOARD_HIJACKING,
   TH_EXECUTE_KEY_LOGGING,
@@ -35,15 +28,9 @@ import {
   TH_EXECUTE_USB_PACKET_SNIFFING,
   TH_FACTORY_RESET_DISK_FORMATTING,
   TH_FAKE_BIOMETRICS,
-  TH_FIND_SAME_SIGNATURES,
-  TH_GUESS,
-  TH_HW_REVERSE_ENGINEERING,
-  TH_HW_SUPPLY_CHAIN,
   TH_INSTALL_MALWARE,
-  TH_INSTALL_MALWARE_ON_ROOTED,
   TH_IP_ADDR_SPOOFING,
   TH_NONCE_REUSE,
-  TH_OBTAIN_PASSPHRASE,
   TH_PHYSICAL_ATTACK,
   TH_REMOVABLE_MEDIA,
   TH_RESOURCE_STARVATION,
@@ -818,7 +805,7 @@ const branchNodes: Node[] = [
     desc: "Install a malware (clipboard data modifier)",
     children: [
       {
-        $and: [
+        $or: [
           { type: NodeType.ATTACK_VECTOR, index: 99 },
           { type: NodeType.ATTACK_VECTOR, index: 100 },
           { type: NodeType.ATTACK_VECTOR, index: 101 },

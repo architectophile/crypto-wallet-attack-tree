@@ -32,7 +32,7 @@ function App() {
     <div className="App">
       <div id="treeWrapper" style={{ width: '500em', height: '500em' }}>
         <Tree 
-          data={g1TreeLedger}
+          data={g1TreeCopay}
           orientation={"vertical"}/>
       </div>
     </div>

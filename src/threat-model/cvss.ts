@@ -4,6 +4,8 @@ export enum CVSS_METRIC {
   PR,
   UI,
   TC,
+  EX,
+  EQ,
   C,
   I,
   A,
@@ -46,12 +48,28 @@ export enum TC {
   E = 3,
 }
 
+export enum EX {
+  L = 0,
+  P = 1,
+  E = 2,
+  M = 3,
+}
+
+export enum EQ {
+  S = 0,
+  P = 1,
+  B = 2,
+  M = 3,
+}
+
 export const cvssMatrices: CvssScoreMatrix[] = [
   { name: "Attack Vector", max: 3, scores: [0.85, 0.62, 0.55, 0.2] },
   { name: "Access Complexity", max: 2, scores: [0.77, 0.62, 0.44] },
   { name: "Privilege Required", max: 2, scores: [0.85, 0.62, 0.27] },
   { name: "User Interaction", max: 1, scores: [0.85, 0.62] },
   { name: "Time Complexity", max: 3, scores: [0.85, 0.62, 0.2, 0.1] },
+  { name: "Expertise", max: 3, scores: [0.85, 0.53, 0.39, 0.33] },
+  { name: "Equipment", max: 3, scores: [0.85, 0.47, 0.35, 0.3] },
 ];
 
 export const calculateCvssBaseMtrics = (metricValues: number[]) => {
@@ -96,6 +114,22 @@ export const calculateCvssBaseMtrics = (metricValues: number[]) => {
   tempVal = tempVal < 0 ? 0 : tempVal;
   const tcValue = cvssMatrices[CVSS_METRIC.TC].scores[tempVal];
 
-  const result = 2.49 * avValue * acValue * prValue * uiValue * tcValue;
+  // get expertise
+  tempVal =
+    metricValues[CVSS_METRIC.EX] > cvssMatrices[CVSS_METRIC.EX].max
+      ? cvssMatrices[CVSS_METRIC.EX].max
+      : metricValues[CVSS_METRIC.EX];
+  tempVal = tempVal < 0 ? 0 : tempVal;
+  const exValue = cvssMatrices[CVSS_METRIC.EX].scores[tempVal];
+
+  // get equipment
+  tempVal =
+    metricValues[CVSS_METRIC.EQ] > cvssMatrices[CVSS_METRIC.EQ].max
+      ? cvssMatrices[CVSS_METRIC.EQ].max
+      : metricValues[CVSS_METRIC.EQ];
+  tempVal = tempVal < 0 ? 0 : tempVal;
+  const eqValue = cvssMatrices[CVSS_METRIC.EQ].scores[tempVal];
+
+  const result = 3.44 * avValue * acValue * prValue * uiValue * tcValue * exValue * eqValue;
   return result;
 };
