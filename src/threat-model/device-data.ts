@@ -178,7 +178,7 @@ const secreqChecklistResults: CheckItem[] = [
       },
     ],
     removals: null,
-    checkResults: [0, 1, 1, 1, 1, 1],
+    checkResults: [1, 1, 1, 1, 1, 1],
   },
   {
     domain: CHECKLIST_DOMAIN.COMMON,
@@ -398,11 +398,6 @@ const secreqChecklistResults: CheckItem[] = [
       },
       {
         type: NodeType.ATTACK_VECTOR,
-        index: 278,
-        metrics: [CVSS_METRIC.AC, CVSS_METRIC.PR],
-      },
-      {
-        type: NodeType.ATTACK_VECTOR,
         index: 312,
         metrics: [CVSS_METRIC.AC, CVSS_METRIC.PR],
       },
@@ -489,11 +484,6 @@ const secreqChecklistResults: CheckItem[] = [
       {
         type: NodeType.ATTACK_VECTOR,
         index: 264,
-        metrics: [CVSS_METRIC.AC, CVSS_METRIC.TC],
-      },
-      {
-        type: NodeType.ATTACK_VECTOR,
-        index: 273,
         metrics: [CVSS_METRIC.AC, CVSS_METRIC.TC],
       },
       {
@@ -617,7 +607,27 @@ const secreqChecklistResults: CheckItem[] = [
       },
       {
         type: NodeType.ATTACK_VECTOR,
+        index: 42,
+        metrics: [CVSS_METRIC.TC, CVSS_METRIC.EX, CVSS_METRIC.EQ],
+      },
+      {
+        type: NodeType.ATTACK_VECTOR,
         index: 44,
+        metrics: [CVSS_METRIC.TC, CVSS_METRIC.EX, CVSS_METRIC.EQ],
+      },
+      {
+        type: NodeType.ATTACK_VECTOR,
+        index: 52,
+        metrics: [CVSS_METRIC.TC, CVSS_METRIC.EX, CVSS_METRIC.EQ],
+      },
+      {
+        type: NodeType.ATTACK_VECTOR,
+        index: 68,
+        metrics: [CVSS_METRIC.TC, CVSS_METRIC.EX, CVSS_METRIC.EQ],
+      },
+      {
+        type: NodeType.ATTACK_VECTOR,
+        index: 134,
         metrics: [CVSS_METRIC.TC, CVSS_METRIC.EX, CVSS_METRIC.EQ],
       },
       {
@@ -632,6 +642,11 @@ const secreqChecklistResults: CheckItem[] = [
       },
       {
         type: NodeType.ATTACK_VECTOR,
+        index: 156,
+        metrics: [CVSS_METRIC.TC, CVSS_METRIC.EX, CVSS_METRIC.EQ],
+      },
+      {
+        type: NodeType.ATTACK_VECTOR,
         index: 199,
         metrics: [CVSS_METRIC.TC, CVSS_METRIC.EX, CVSS_METRIC.EQ],
       },
@@ -642,7 +657,17 @@ const secreqChecklistResults: CheckItem[] = [
       },
       {
         type: NodeType.ATTACK_VECTOR,
+        index: 206,
+        metrics: [CVSS_METRIC.TC, CVSS_METRIC.EX, CVSS_METRIC.EQ],
+      },
+      {
+        type: NodeType.ATTACK_VECTOR,
         index: 227,
+        metrics: [CVSS_METRIC.TC, CVSS_METRIC.EX, CVSS_METRIC.EQ],
+      },
+      {
+        type: NodeType.ATTACK_VECTOR,
+        index: 231,
         metrics: [CVSS_METRIC.TC, CVSS_METRIC.EX, CVSS_METRIC.EQ],
       },
       {
@@ -943,21 +968,6 @@ const secreqChecklistResults: CheckItem[] = [
       {
         type: NodeType.ATTACK_VECTOR,
         index: 149,
-        metrics: [CVSS_METRIC.AV, CVSS_METRIC.AC],
-      },
-      {
-        type: NodeType.ATTACK_VECTOR,
-        index: 183,
-        metrics: [CVSS_METRIC.AV, CVSS_METRIC.AC],
-      },
-      {
-        type: NodeType.ATTACK_VECTOR,
-        index: 184,
-        metrics: [CVSS_METRIC.AV, CVSS_METRIC.AC],
-      },
-      {
-        type: NodeType.ATTACK_VECTOR,
-        index: 187,
         metrics: [CVSS_METRIC.AV, CVSS_METRIC.AC],
       },
       {

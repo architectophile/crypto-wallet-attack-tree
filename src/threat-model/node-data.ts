@@ -9,6 +9,7 @@ import {
   OperatorAnd,
   OperatorOr,
 } from "./common";
+import { AC, AV, EQ, EX, PR, TC, UI } from "./cvss";
 import {
   TH_ACCESS_PHYSICALLY,
   TH_ARP_SPOOFING,
@@ -49,6 +50,8 @@ import {
   calculateDefaultCvssScore,
   calculateProductCvssScore,
 } from "./device-data";
+
+const isDefaultSecurity = true;
 
 // Root Goals
 const goals: Node[] = [
@@ -201,9 +204,8 @@ const subgoals: Node[] = [
     children: [
       {
         $or: [
-          { type: NodeType.BRANCH_NODE, index: 86 },
-          { type: NodeType.BRANCH_NODE, index: 87 },
-          { type: NodeType.BRANCH_NODE, index: 88 },
+          { type: NodeType.BRANCH_NODE, index: 129 },
+          { type: NodeType.BRANCH_NODE, index: 132 },
         ],
       },
     ],
@@ -747,7 +749,7 @@ const branchNodes: Node[] = [
 
   {
     type: NodeType.BRANCH_NODE, // B36
-    desc: "Bypass OS authentication",
+    desc: "Find a private key using a computational method",
     children: [
       {
         $or: [
@@ -1545,7 +1547,7 @@ const branchNodes: Node[] = [
 
   {
     type: NodeType.BRANCH_NODE, // B91
-    desc: "DoS attacks on the blockchain node or API server",
+    desc: "Obtain account information from the wallet application (or wallet manager)",
     children: [
       {
         $and: [
@@ -1656,7 +1658,7 @@ const branchNodes: Node[] = [
     desc: "Install a malware (keylogger, screen touch input logger)",
     children: [
       {
-        $and: [
+        $or: [
           { type: NodeType.ATTACK_VECTOR, index: 269 },
           { type: NodeType.ATTACK_VECTOR, index: 270 },
           { type: NodeType.ATTACK_VECTOR, index: 271 },
@@ -1793,9 +1795,9 @@ const branchNodes: Node[] = [
     children: [
       {
         $or: [
-          { type: NodeType.ATTACK_VECTOR, index: 288 },
           { type: NodeType.ATTACK_VECTOR, index: 289 },
           { type: NodeType.ATTACK_VECTOR, index: 290 },
+          { type: NodeType.ATTACK_VECTOR, index: 291 },
         ],
       },
     ],
@@ -2076,6 +2078,105 @@ const branchNodes: Node[] = [
           { type: NodeType.ATTACK_VECTOR, index: 333 },
           { type: NodeType.ATTACK_VECTOR, index: 334 },
           { type: NodeType.ATTACK_VECTOR, index: 335 },
+        ],
+      },
+    ],
+  },
+
+
+  // Test nodes
+  {
+    type: NodeType.BRANCH_NODE, // B129
+    desc: "Eavesdrop input data",
+    children: [
+      {
+        $or: [
+          { type: NodeType.BRANCH_NODE, index: 130 },
+          { type: NodeType.BRANCH_NODE, index: 132 },
+        ],
+      },
+    ],
+  },
+  {
+    type: NodeType.BRANCH_NODE, // B130
+    desc: "Keylogger malware attack",
+    children: [
+      {
+        $and: [
+          { type: NodeType.BRANCH_NODE, index: 131 },
+          { type: NodeType.ATTACK_VECTOR, index: 340 },
+        ],
+      },
+    ],
+  },
+  {
+    type: NodeType.BRANCH_NODE, // B131
+    desc: "Install a keylogger malware",
+    children: [
+      {
+        $or: [
+          { type: NodeType.ATTACK_VECTOR, index: 336 },
+          { type: NodeType.ATTACK_VECTOR, index: 337 },
+          { type: NodeType.ATTACK_VECTOR, index: 338 },
+          { type: NodeType.ATTACK_VECTOR, index: 339 },
+        ],
+      },
+    ],
+  },
+  {
+    type: NodeType.BRANCH_NODE, // B132
+    desc: "Observe output data directly on the screen",
+    children: [
+      {
+        $or: [
+          { type: NodeType.ATTACK_VECTOR, index: 341 },
+          { type: NodeType.BRANCH_NODE, index: 133 },
+        ],
+      },
+    ],
+  },
+  {
+    type: NodeType.BRANCH_NODE, // B133
+    desc: "Open the wallet and obtain secret data",
+    children: [
+      {
+        $and: [
+          { type: NodeType.BRANCH_NODE, index: 134 },
+          { type: NodeType.BRANCH_NODE, index: 135 },
+        ],
+      },
+    ],
+  },
+  {
+    type: NodeType.BRANCH_NODE, // B134
+    desc: "Bypass OS authentication",
+    children: [
+      {
+        $or: [
+          { type: NodeType.ATTACK_VECTOR, index: 342 },
+          { type: NodeType.ATTACK_VECTOR, index: 343 },
+          { type: NodeType.ATTACK_VECTOR, index: 344 },
+          { type: NodeType.ATTACK_VECTOR, index: 345 },
+          { type: NodeType.ATTACK_VECTOR, index: 346 },
+          { type: NodeType.ATTACK_VECTOR, index: 347 },
+          { type: NodeType.ATTACK_VECTOR, index: 348 },
+        ],
+      },
+    ],
+  },
+  {
+    type: NodeType.BRANCH_NODE, // B135
+    desc: "Bypass wallet user authentication",
+    children: [
+      {
+        $or: [
+          { type: NodeType.ATTACK_VECTOR, index: 349 },
+          { type: NodeType.ATTACK_VECTOR, index: 350 },
+          { type: NodeType.ATTACK_VECTOR, index: 351 },
+          { type: NodeType.ATTACK_VECTOR, index: 352 },
+          { type: NodeType.ATTACK_VECTOR, index: 353 },
+          { type: NodeType.ATTACK_VECTOR, index: 354 },
+          { type: NodeType.ATTACK_VECTOR, index: 355 },
         ],
       },
     ],
@@ -3758,7 +3859,150 @@ export const attacks: Node[] = [
     type: NodeType.ATTACK_VECTOR, // T335
     desc: "IP address spoofing",
     cvssScore: TH_IP_ADDR_SPOOFING,
-  },  
+  },
+
+
+  // Test nodes
+  {
+    type: NodeType.ATTACK_VECTOR, // T336
+    desc: "Social engineering",
+    cvssScore: isDefaultSecurity 
+      ? [AV.N, AC.L, PR.L, UI.R, TC.M, EX.P, EQ.S] 
+      : [AV.L, AC.H, PR.L, UI.R, TC.M, EX.P, EQ.S],
+  },
+  {
+    type: NodeType.ATTACK_VECTOR, // T337
+    desc: "Rogue AP",
+    cvssScore: isDefaultSecurity 
+      ? [AV.L, AC.L, PR.N, UI.R, TC.M, EX.P, EQ.S]
+      : [AV.L, AC.L, PR.N, UI.R, TC.M, EX.P, EQ.S],
+  },
+  {
+    type: NodeType.ATTACK_VECTOR, // T338
+    desc: "Supply chain attack",
+    cvssScore: isDefaultSecurity 
+      ? [AV.N, AC.H, PR.N, UI.R, TC.M, EX.E, EQ.S]
+      : [AV.L, AC.H, PR.N, UI.R, TC.M, EX.E, EQ.S],
+  },
+  {
+    type: NodeType.ATTACK_VECTOR, // T339
+    desc: "Removable media",
+    cvssScore: isDefaultSecurity 
+      ? [AV.P, AC.H, PR.N, UI.N, TC.N, EX.L, EQ.S]
+      : [AV.P, AC.H, PR.N, UI.N, TC.N, EX.L, EQ.S],
+  },
+  {
+    type: NodeType.ATTACK_VECTOR, // T340
+    desc: "Execute keylogging attack",
+    cvssScore: isDefaultSecurity 
+      ? [AV.N, AC.L, PR.L, UI.R, TC.N, EX.L, EQ.S]
+      : [AV.L, AC.L, PR.L, UI.R, TC.N, EX.L, EQ.S],
+  },
+  {
+    type: NodeType.ATTACK_VECTOR, // T341
+    desc: "Shoulder-surfing attack",
+    cvssScore: isDefaultSecurity 
+      ? [AV.P, AC.H, PR.N, UI.R, TC.N, EX.L, EQ.S]
+      : [AV.P, AC.H, PR.N, UI.R, TC.N, EX.L, EQ.S],
+  },
+  {
+    type: NodeType.ATTACK_VECTOR, // T342
+    desc: "Brute-force attack",
+    cvssScore: isDefaultSecurity 
+      ? [AV.P, AC.L, PR.N, UI.N, TC.E, EX.L, EQ.P]
+      : [AV.P, AC.L, PR.N, UI.N, TC.E, EX.L, EQ.P],
+  },
+  {
+    type: NodeType.ATTACK_VECTOR, // T343
+    desc: "Buffer over flow",
+    cvssScore: isDefaultSecurity 
+      ? [AV.A, AC.H, PR.N, UI.N, TC.H, EX.E, EQ.S]
+      : [AV.L, AC.H, PR.N, UI.N, TC.H, EX.E, EQ.S],
+  },
+  {
+    type: NodeType.ATTACK_VECTOR, // T344
+    desc: "Evil maid attack",
+    cvssScore: isDefaultSecurity 
+      ? [AV.P, AC.H, PR.N, UI.N, TC.M, EX.E, EQ.S]
+      : [AV.P, AC.H, PR.N, UI.N, TC.M, EX.E, EQ.S],
+  },
+  {
+    type: NodeType.ATTACK_VECTOR, // T345
+    desc: "Fake biometrics",
+    cvssScore: isDefaultSecurity 
+      ? [AV.P, AC.H, PR.N, UI.N, TC.N, EX.P, EQ.P]
+      : [AV.P, AC.H, PR.N, UI.N, TC.N, EX.P, EQ.P],
+  },
+  {
+    type: NodeType.ATTACK_VECTOR, // T346
+    desc: "Physical access when the host is open",
+    cvssScore: isDefaultSecurity 
+      ? [AV.P, AC.H, PR.N, UI.N, TC.N, EX.L, EQ.S]
+      : [AV.P, AC.H, PR.N, UI.N, TC.N, EX.L, EQ.S],
+  },
+  {
+    type: NodeType.ATTACK_VECTOR, // T347
+    desc: "Shoulder-surfing attack",
+    cvssScore: isDefaultSecurity 
+      ? [AV.P, AC.H, PR.N, UI.R, TC.N, EX.L, EQ.S]
+      : [AV.P, AC.H, PR.N, UI.R, TC.N, EX.L, EQ.S],
+  },
+  {
+    type: NodeType.ATTACK_VECTOR, // T348
+    desc: "Physical attack",
+    cvssScore: isDefaultSecurity 
+      ? [AV.P, AC.H, PR.N, UI.N, TC.M, EX.E, EQ.P]
+      : [AV.P, AC.H, PR.N, UI.N, TC.E, EX.E, EQ.B],
+  },
+  {
+    type: NodeType.ATTACK_VECTOR, // T349
+    desc: "Brute-force attack",
+    cvssScore: isDefaultSecurity 
+      ? [AV.P, AC.L, PR.N, UI.N, TC.E, EX.L, EQ.P]
+      : [AV.P, AC.L, PR.N, UI.N, TC.E, EX.L, EQ.P],
+  },
+  {
+    type: NodeType.ATTACK_VECTOR, // T350
+    desc: "Buffer over flow",
+    cvssScore: isDefaultSecurity 
+      ? [AV.A, AC.H, PR.N, UI.N, TC.H, EX.E, EQ.S]
+      : [AV.L, AC.H, PR.N, UI.N, TC.H, EX.E, EQ.S],
+  },
+  {
+    type: NodeType.ATTACK_VECTOR, // T351
+    desc: "Evil maid attack",
+    cvssScore: isDefaultSecurity 
+      ? [AV.P, AC.H, PR.N, UI.N, TC.M, EX.E, EQ.S]
+      : [AV.P, AC.H, PR.N, UI.N, TC.M, EX.E, EQ.S],
+  },
+  {
+    type: NodeType.ATTACK_VECTOR, // T352
+    desc: "Fake biometrics",
+    cvssScore: isDefaultSecurity 
+      ? [AV.P, AC.H, PR.N, UI.N, TC.N, EX.P, EQ.P]
+      : [AV.P, AC.H, PR.N, UI.N, TC.N, EX.P, EQ.P],
+  },
+  {
+    type: NodeType.ATTACK_VECTOR, // T353
+    desc: "Physical access when the host is open",
+    cvssScore: isDefaultSecurity 
+      ? [AV.P, AC.H, PR.N, UI.N, TC.N, EX.L, EQ.S]
+      : [AV.P, AC.H, PR.N, UI.N, TC.N, EX.L, EQ.S],
+  },
+  {
+    type: NodeType.ATTACK_VECTOR, // T354
+    desc: "Shoulder-surfing attack",
+    cvssScore: isDefaultSecurity 
+      ? [AV.P, AC.H, PR.N, UI.R, TC.N, EX.L, EQ.S]
+      : [AV.P, AC.H, PR.N, UI.R, TC.N, EX.L, EQ.S],
+  },
+  {
+    type: NodeType.ATTACK_VECTOR, // T355
+    desc: "Physical attack",
+    cvssScore: isDefaultSecurity 
+      ? [AV.P, AC.H, PR.N, UI.N, TC.M, EX.E, EQ.P]
+      : [AV.P, AC.H, PR.N, UI.N, TC.E, EX.E, EQ.B],
+  },
 ];
 
 const getNode = (nodeInfo: NodeInfo): Node => {

@@ -42,10 +42,11 @@ export enum UI {
 }
 
 export enum TC {
-  L = 0,
+  N = 0,
   M = 1,
   H = 2,
   E = 3,
+  X = 4,
 }
 
 export enum EX {
@@ -67,7 +68,7 @@ export const cvssMatrices: CvssScoreMatrix[] = [
   { name: "Access Complexity", max: 2, scores: [0.77, 0.62, 0.44] },
   { name: "Privilege Required", max: 2, scores: [0.85, 0.62, 0.27] },
   { name: "User Interaction", max: 1, scores: [0.85, 0.62] },
-  { name: "Time Complexity", max: 3, scores: [0.85, 0.62, 0.2, 0.1] },
+  { name: "Time Complexity", max: 4, scores: [0.85, 0.78, 0.42, 0.05, 0] },
   { name: "Expertise", max: 3, scores: [0.85, 0.53, 0.39, 0.33] },
   { name: "Equipment", max: 3, scores: [0.85, 0.47, 0.35, 0.3] },
 ];
