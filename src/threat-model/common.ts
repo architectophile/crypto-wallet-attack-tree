@@ -1,4 +1,5 @@
 import { RawNodeDatum } from "react-d3-tree/lib/types/common";
+import { INode } from 'bayesjs';
 
 export enum NodeType {
   ROOT_GOAL,
@@ -70,3 +71,5 @@ export interface NewNodeDatum extends RawNodeDatum {
   cvssScore: number;
   children?: NewNodeDatum[];
 }
+
+export type BNNodeDatum = RawNodeDatum & INode;

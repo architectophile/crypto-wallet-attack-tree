@@ -1,5 +1,7 @@
+import { ICptWithoutParents, ICptWithParents, INetwork, INode } from "bayesjs";
 import { RawNodeDatum } from "react-d3-tree/lib/types/common";
 import {
+  BNNodeDatum,
   DeviceInfo,
   NewNodeDatum,
   Node,
@@ -52,6 +54,7 @@ import {
 } from "./device-data";
 
 const isDefaultSecurity = true;
+let andCnt = 0;
 
 // Root Goals
 const goals: Node[] = [
@@ -61,10 +64,10 @@ const goals: Node[] = [
     children: [
       {
         $or: [
-          { type: NodeType.SUB_GOAL, index: 1 },
-          { type: NodeType.SUB_GOAL, index: 2 },
-          { type: NodeType.SUB_GOAL, index: 3 },
-          // { type: NodeType.SUB_GOAL, index: 9 },
+          // { type: NodeType.SUB_GOAL, index: 1 },
+          // { type: NodeType.SUB_GOAL, index: 2 },
+          // { type: NodeType.SUB_GOAL, index: 3 },
+          { type: NodeType.SUB_GOAL, index: 9 },
         ],
       },
     ],
@@ -2092,7 +2095,6 @@ const branchNodes: Node[] = [
       {
         $or: [
           { type: NodeType.BRANCH_NODE, index: 130 },
-          { type: NodeType.BRANCH_NODE, index: 132 },
         ],
       },
     ],
@@ -4121,21 +4123,21 @@ export const generateTree = (
       desc: node.desc,
     });
   } else if (node.type === NodeType.SUB_GOAL) {
-    resultNode.name = `SG${index}`;
+    resultNode.name = `S${index}`;
     resultNode.attributes = Object.assign(resultNode.attributes, {
       type: "Sub Goal",
       desc: node.desc,
     });
   } else if (node.type === NodeType.BRANCH_NODE) {
-    resultNode.name = `N${index}`;
+    resultNode.name = `B${index}`;
     resultNode.attributes = Object.assign(resultNode.attributes, {
       type: "Branch Node",
       desc: node.desc,
     });
   } else if (node.type === NodeType.ATTACK_VECTOR) {
-    resultNode.name = `A${index}`;
+    resultNode.name = `T${index}`;
     resultNode.attributes = Object.assign(resultNode.attributes, {
-      type: "Attack Vector",
+      type: "Threat Node",
       desc: node.desc,
     });
   } else if (node.type === NodeType.AND) {
@@ -4276,3 +4278,87 @@ export const generateAttackTree = (
   );
   return result;
 };
+
+const getCptForParents = (parentIds: string[], isAndNode: boolean): ICptWithoutParents | ICptWithParents => {
+  let count = 0;
+  const cpt: ICptWithoutParents | ICptWithParents = [];
+  let isFirst = true;
+  
+  parentIds.forEach(()=> {
+    count = count << 1;
+    count = count + 1;
+  });
+
+  // AND node
+  if (isAndNode) {
+    while(count >= 0) {
+      const when: Record<string, string> = {};
+      for (let i=0; i<parentIds.length; i++) {
+        const posVal = 1 << i;
+        when[parentIds[i]] = (posVal & count) === 0 ? "F" : "T";
+      }
+      if (isFirst === true) {
+        cpt.push({ when: when, then: {T: 1.0, F: 0.0}});
+        isFirst = false;
+      }
+      else
+        cpt.push({ when: when, then: {T: 0.0, F: 1.0}});
+      count--;
+    }
+  }
+  else {
+    // OR node
+    while(count >= 0) {
+      const when: Record<string, string> = {};
+      for (let i=0; i<parentIds.length; i++) {
+        const posVal = 1 << i;
+        when[parentIds[i]] = (posVal & count) === 0 ? "F" : "T";
+      }
+      if (count !== 0)
+        cpt.push({ when: when, then: {T: 1.0, F: 0.0}});
+      else
+        cpt.push({ when: when, then: {T: 0.0, F: 1.0}});
+      count--;
+    }
+  }
+  return cpt;
+};
+
+export const addBNInfo = (attackTree: RawNodeDatum, network: INetwork): BNNodeDatum => {
+  // if already registered in the BN nodes then just add the parent and skip.
+  
+  if (attackTree.children) {
+    const isAndNode: boolean = attackTree.name === "AND" ? true : false;
+    const parentIds: string[] = attackTree.children.map((childTree): string => {
+      const parentBN = addBNInfo(childTree, network);
+      return parentBN.id;
+    });
+
+    const bnNode: INode = {
+      id: isAndNode ? (attackTree.name + andCnt++) : attackTree.name,
+      states: ['T', 'F'],
+      parents: parentIds,
+      cpt: getCptForParents(parentIds, isAndNode),
+    };
+
+    const result: BNNodeDatum  = Object.assign(attackTree, bnNode);
+
+    network[result.id] = bnNode;
+    return result;
+  }
+  else {
+    const attrs = attackTree.attributes as Record<string, string>;
+    const calculated: number = Number(attrs["calculated"]);
+  
+    const bnNode: INode = {
+      id: attackTree.name,
+      states: ['T', 'F'],
+      parents: [],
+      cpt: { T: calculated, F: Number((1.00 - calculated).toPrecision(2)) },
+    }
+    const result: BNNodeDatum  = Object.assign(attackTree, bnNode);
+
+    network[result.id] = bnNode;
+    return result;
+  }
+}
