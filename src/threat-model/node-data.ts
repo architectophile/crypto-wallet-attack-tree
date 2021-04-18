@@ -1,8 +1,15 @@
-import { ICptWithoutParents, ICptWithParents, INetwork, INode } from "bayesjs";
+import {
+  addNode,
+  ICptWithoutParents,
+  ICptWithParents,
+  INetwork,
+  INode,
+} from "bayesjs";
 import { RawNodeDatum } from "react-d3-tree/lib/types/common";
 import {
   BNNodeDatum,
   DeviceInfo,
+  NetworkContainer,
   NewNodeDatum,
   Node,
   NodeInfo,
@@ -133,9 +140,7 @@ const subgoals: Node[] = [
   {
     type: NodeType.SUB_GOAL,
     desc: "Intercept cryptocurrency",
-    children: [
-          { type: NodeType.BRANCH_NODE, index: 56 },
-    ],
+    children: [{ type: NodeType.BRANCH_NODE, index: 56 }],
   },
   {
     type: NodeType.SUB_GOAL,
@@ -219,13 +224,10 @@ const subgoals: Node[] = [
 const branchNodes: Node[] = [
   {
     type: NodeType.BRANCH_NODE, // B1
-    desc:
-      "Eavesdrop input data",
+    desc: "Eavesdrop input data",
     children: [
       {
-        $or: [
-          { type: NodeType.BRANCH_NODE, index: 2 },
-        ],
+        $or: [{ type: NodeType.BRANCH_NODE, index: 2 }],
       },
     ],
   },
@@ -263,9 +265,7 @@ const branchNodes: Node[] = [
     desc: "Eavesdrop output data",
     children: [
       {
-        $or: [
-          { type: NodeType.BRANCH_NODE, index: 5 },
-        ],
+        $or: [{ type: NodeType.BRANCH_NODE, index: 5 }],
       },
     ],
   },
@@ -540,9 +540,7 @@ const branchNodes: Node[] = [
             ],
           },
           {
-            $or: [
-              { type: NodeType.BRANCH_NODE, index: 26 },
-            ],
+            $or: [{ type: NodeType.BRANCH_NODE, index: 26 }],
           },
         ],
       },
@@ -623,9 +621,7 @@ const branchNodes: Node[] = [
             ],
           },
           {
-            $or: [
-              { type: NodeType.ATTACK_VECTOR, index: 82 },
-            ],
+            $or: [{ type: NodeType.ATTACK_VECTOR, index: 82 }],
           },
         ],
       },
@@ -693,7 +689,8 @@ const branchNodes: Node[] = [
 
   {
     type: NodeType.BRANCH_NODE, // B32
-    desc: "Replace a recovery phrase or private key with an adversary’s using a clipboard malware",
+    desc:
+      "Replace a recovery phrase or private key with an adversary’s using a clipboard malware",
     children: [
       {
         $and: [
@@ -706,7 +703,8 @@ const branchNodes: Node[] = [
 
   {
     type: NodeType.BRANCH_NODE, // B33
-    desc: "Replace a recovery phrase or private key with an adversary’s using a clipboard malware",
+    desc:
+      "Replace a recovery phrase or private key with an adversary’s using a clipboard malware",
     children: [
       {
         $and: [
@@ -825,9 +823,7 @@ const branchNodes: Node[] = [
     desc: "Bypass user confirmation",
     children: [
       {
-        $or: [
-          { type: NodeType.ATTACK_VECTOR, index: 104 },
-        ],
+        $or: [{ type: NodeType.ATTACK_VECTOR, index: 104 }],
       },
     ],
   },
@@ -897,9 +893,7 @@ const branchNodes: Node[] = [
     desc: "Bypass user confirmation",
     children: [
       {
-        $or: [
-          { type: NodeType.ATTACK_VECTOR, index: 118 },
-        ],
+        $or: [{ type: NodeType.ATTACK_VECTOR, index: 118 }],
       },
     ],
   },
@@ -1194,7 +1188,8 @@ const branchNodes: Node[] = [
 
   {
     type: NodeType.BRANCH_NODE, // B66
-    desc: "Replace a user’s address with an adversary’s using a clipboard hijacker",
+    desc:
+      "Replace a user’s address with an adversary’s using a clipboard hijacker",
     children: [
       {
         $and: [
@@ -1287,7 +1282,7 @@ const branchNodes: Node[] = [
     children: [
       {
         $or: [
-          { type: NodeType.ATTACK_VECTOR, index: 203 },          
+          { type: NodeType.ATTACK_VECTOR, index: 203 },
           { type: NodeType.BRANCH_NODE, index: 73 },
           { type: NodeType.ATTACK_VECTOR, index: 207 },
         ],
@@ -1314,9 +1309,7 @@ const branchNodes: Node[] = [
     desc: "Encrypt a private key",
     children: [
       {
-        $or: [
-          { type: NodeType.BRANCH_NODE, index: 75 },
-        ],
+        $or: [{ type: NodeType.BRANCH_NODE, index: 75 }],
       },
     ],
   },
@@ -1395,7 +1388,8 @@ const branchNodes: Node[] = [
 
   {
     type: NodeType.BRANCH_NODE, // B80
-    desc: "Bypass OS authentication and uninstall the wallet application (or wallet manager)",
+    desc:
+      "Bypass OS authentication and uninstall the wallet application (or wallet manager)",
     children: [
       {
         $or: [
@@ -1444,9 +1438,7 @@ const branchNodes: Node[] = [
     desc: "Encrypt a wallet application (or wallet manager)",
     children: [
       {
-        $or: [
-          { type: NodeType.BRANCH_NODE, index: 84 },
-        ],
+        $or: [{ type: NodeType.BRANCH_NODE, index: 84 }],
       },
     ],
   },
@@ -1481,7 +1473,8 @@ const branchNodes: Node[] = [
 
   {
     type: NodeType.BRANCH_NODE, // B86
-    desc: "Prevent a user downloading or updating the wallet application or firmware",
+    desc:
+      "Prevent a user downloading or updating the wallet application or firmware",
     children: [
       {
         $or: [
@@ -1508,7 +1501,8 @@ const branchNodes: Node[] = [
 
   {
     type: NodeType.BRANCH_NODE, // B88
-    desc: "Man-in-the-middle attacks between the wallet and the download server",
+    desc:
+      "Man-in-the-middle attacks between the wallet and the download server",
     children: [
       {
         $or: [
@@ -1522,7 +1516,8 @@ const branchNodes: Node[] = [
 
   {
     type: NodeType.BRANCH_NODE, // B89
-    desc: "Man-in-the-middle attacks between the wallet application and the blockchain network",
+    desc:
+      "Man-in-the-middle attacks between the wallet application and the blockchain network",
     children: [
       {
         $or: [
@@ -1550,7 +1545,8 @@ const branchNodes: Node[] = [
 
   {
     type: NodeType.BRANCH_NODE, // B91
-    desc: "Obtain account information from the wallet application (or wallet manager)",
+    desc:
+      "Obtain account information from the wallet application (or wallet manager)",
     children: [
       {
         $and: [
@@ -1636,9 +1632,7 @@ const branchNodes: Node[] = [
     desc: "Eavesdrop input data",
     children: [
       {
-        $or: [
-          { type: NodeType.BRANCH_NODE, index: 97 },
-        ],
+        $or: [{ type: NodeType.BRANCH_NODE, index: 97 }],
       },
     ],
   },
@@ -1676,9 +1670,7 @@ const branchNodes: Node[] = [
     desc: "Eavesdrop output data",
     children: [
       {
-        $or: [
-          { type: NodeType.BRANCH_NODE, index: 100 },
-        ],
+        $or: [{ type: NodeType.BRANCH_NODE, index: 100 }],
       },
     ],
   },
@@ -1716,9 +1708,7 @@ const branchNodes: Node[] = [
     desc: "Eavesdrop clipboard data",
     children: [
       {
-        $or: [
-          { type: NodeType.BRANCH_NODE, index: 103 },
-        ],
+        $or: [{ type: NodeType.BRANCH_NODE, index: 103 }],
       },
     ],
   },
@@ -1811,9 +1801,7 @@ const branchNodes: Node[] = [
     desc: "Eavesdrop peripheral data",
     children: [
       {
-        $or: [
-          { type: NodeType.BRANCH_NODE, index: 110 },
-        ],
+        $or: [{ type: NodeType.BRANCH_NODE, index: 110 }],
       },
     ],
   },
@@ -1848,7 +1836,8 @@ const branchNodes: Node[] = [
 
   {
     type: NodeType.BRANCH_NODE, // B112
-    desc: "Obtain personal information from the wallet application (or wallet manager)",
+    desc:
+      "Obtain personal information from the wallet application (or wallet manager)",
     children: [
       {
         $or: [
@@ -1916,9 +1905,7 @@ const branchNodes: Node[] = [
     desc: "Eavesdrop input data",
     children: [
       {
-        $or: [
-          { type: NodeType.BRANCH_NODE, index: 117 },
-        ],
+        $or: [{ type: NodeType.BRANCH_NODE, index: 117 }],
       },
     ],
   },
@@ -1956,9 +1943,7 @@ const branchNodes: Node[] = [
     desc: "Eavesdrop output data",
     children: [
       {
-        $or: [
-          { type: NodeType.BRANCH_NODE, index: 120 },
-        ],
+        $or: [{ type: NodeType.BRANCH_NODE, index: 120 }],
       },
     ],
   },
@@ -1996,9 +1981,7 @@ const branchNodes: Node[] = [
     desc: "Eavesdrop clipboard data",
     children: [
       {
-        $or: [
-          { type: NodeType.BRANCH_NODE, index: 123 },
-        ],
+        $or: [{ type: NodeType.BRANCH_NODE, index: 123 }],
       },
     ],
   },
@@ -2086,16 +2069,13 @@ const branchNodes: Node[] = [
     ],
   },
 
-
   // Test nodes
   {
     type: NodeType.BRANCH_NODE, // B129
     desc: "Eavesdrop input data",
     children: [
       {
-        $or: [
-          { type: NodeType.BRANCH_NODE, index: 130 },
-        ],
+        $or: [{ type: NodeType.BRANCH_NODE, index: 130 }],
       },
     ],
   },
@@ -2214,7 +2194,8 @@ export const attacks: Node[] = [
   },
   {
     type: NodeType.ATTACK_VECTOR, // T6
-    desc: "Social engineering (malicious files, malvertising, phishing, drive-by download attack)",
+    desc:
+      "Social engineering (malicious files, malvertising, phishing, drive-by download attack)",
     cvssScore: TH_SOCIAL_ENGINEERING,
   },
   {
@@ -2314,7 +2295,8 @@ export const attacks: Node[] = [
   },
   {
     type: NodeType.ATTACK_VECTOR, // T26
-    desc: "Obtain auth credentials using a malware (keylogger, screen recorder, trojan)",
+    desc:
+      "Obtain auth credentials using a malware (keylogger, screen recorder, trojan)",
     cvssScore: TH_INSTALL_MALWARE,
   },
   {
@@ -2329,7 +2311,8 @@ export const attacks: Node[] = [
   },
   {
     type: NodeType.ATTACK_VECTOR, // T29
-    desc: "Physical attack (fault injection, probing, microscoping, cold boot attack)",
+    desc:
+      "Physical attack (fault injection, probing, microscoping, cold boot attack)",
     cvssScore: TH_PHYSICAL_ATTACK,
   },
   {
@@ -2339,7 +2322,8 @@ export const attacks: Node[] = [
   },
   {
     type: NodeType.ATTACK_VECTOR, // T31
-    desc: "Social engineering (malicious files, malvertising, phishing, drive-by download attack)",
+    desc:
+      "Social engineering (malicious files, malvertising, phishing, drive-by download attack)",
     cvssScore: TH_SOCIAL_ENGINEERING,
   },
   {
@@ -2379,7 +2363,8 @@ export const attacks: Node[] = [
   },
   {
     type: NodeType.ATTACK_VECTOR, // T39
-    desc: "Physical attack (fault injection, probing, microscoping, cold boot attack)",
+    desc:
+      "Physical attack (fault injection, probing, microscoping, cold boot attack)",
     cvssScore: TH_PHYSICAL_ATTACK,
   },
   {
@@ -2409,7 +2394,8 @@ export const attacks: Node[] = [
   },
   {
     type: NodeType.ATTACK_VECTOR, // T45
-    desc: "Social engineering (malicious files, malvertising, phishing, drive-by download attack)",
+    desc:
+      "Social engineering (malicious files, malvertising, phishing, drive-by download attack)",
     cvssScore: TH_SOCIAL_ENGINEERING,
   },
   {
@@ -2929,7 +2915,8 @@ export const attacks: Node[] = [
   },
   {
     type: NodeType.ATTACK_VECTOR, // T149
-    desc: "Obtain auth credentials using a malware (keylogger, screen recorder)",
+    desc:
+      "Obtain auth credentials using a malware (keylogger, screen recorder)",
     cvssScore: TH_INSTALL_MALWARE,
   },
   {
@@ -2944,7 +2931,8 @@ export const attacks: Node[] = [
   },
   {
     type: NodeType.ATTACK_VECTOR, // T152
-    desc: "Physical attack (fault injection, probing, microscoping, cold boot attack)",
+    desc:
+      "Physical attack (fault injection, probing, microscoping, cold boot attack)",
     cvssScore: TH_PHYSICAL_ATTACK,
   },
   {
@@ -3099,7 +3087,8 @@ export const attacks: Node[] = [
   },
   {
     type: NodeType.ATTACK_VECTOR, // T183
-    desc: "Social engineering (malicious files, malvertising, phishing, drive-by download attack)",
+    desc:
+      "Social engineering (malicious files, malvertising, phishing, drive-by download attack)",
     cvssScore: TH_SOCIAL_ENGINEERING,
   },
   {
@@ -3194,7 +3183,8 @@ export const attacks: Node[] = [
   },
   {
     type: NodeType.ATTACK_VECTOR, // T202
-    desc: "Obtain auth credentials using a malware (keylogger, screen recorder, trojan)",
+    desc:
+      "Obtain auth credentials using a malware (keylogger, screen recorder, trojan)",
     cvssScore: TH_INSTALL_MALWARE,
   },
   {
@@ -3224,7 +3214,8 @@ export const attacks: Node[] = [
   },
   {
     type: NodeType.ATTACK_VECTOR, // T208
-    desc: "Social engineering (malicious files, malvertising, phishing, drive-by download attack)",
+    desc:
+      "Social engineering (malicious files, malvertising, phishing, drive-by download attack)",
     cvssScore: TH_SOCIAL_ENGINEERING,
   },
   {
@@ -3324,7 +3315,8 @@ export const attacks: Node[] = [
   },
   {
     type: NodeType.ATTACK_VECTOR, // T228
-    desc: "Delete the wallet application (or wallet manager) using factory reset or disk formatting",
+    desc:
+      "Delete the wallet application (or wallet manager) using factory reset or disk formatting",
     cvssScore: TH_FACTORY_RESET_DISK_FORMATTING,
   },
   {
@@ -3349,7 +3341,8 @@ export const attacks: Node[] = [
   },
   {
     type: NodeType.ATTACK_VECTOR, // T233
-    desc: "Social engineering (malicious files, malvertising, phishing, drive-by download attack)",
+    desc:
+      "Social engineering (malicious files, malvertising, phishing, drive-by download attack)",
     cvssScore: TH_SOCIAL_ENGINEERING,
   },
   {
@@ -3504,7 +3497,8 @@ export const attacks: Node[] = [
   },
   {
     type: NodeType.ATTACK_VECTOR, // T264
-    desc: "Obtain auth credentials using a malware (keylogger, screen recorder, trojan)",
+    desc:
+      "Obtain auth credentials using a malware (keylogger, screen recorder, trojan)",
     cvssScore: TH_INSTALL_MALWARE,
   },
   {
@@ -3519,7 +3513,8 @@ export const attacks: Node[] = [
   },
   {
     type: NodeType.ATTACK_VECTOR, // T267
-    desc: "Physical attack (fault injection, probing, microscoping, cold boot attack)",
+    desc:
+      "Physical attack (fault injection, probing, microscoping, cold boot attack)",
     cvssScore: TH_PHYSICAL_ATTACK,
   },
   {
@@ -3529,7 +3524,8 @@ export const attacks: Node[] = [
   },
   {
     type: NodeType.ATTACK_VECTOR, // T269
-    desc: "Social engineering (malicious files, malvertising, phishing, drive-by download attack)",
+    desc:
+      "Social engineering (malicious files, malvertising, phishing, drive-by download attack)",
     cvssScore: TH_SOCIAL_ENGINEERING,
   },
   {
@@ -3554,7 +3550,8 @@ export const attacks: Node[] = [
   },
   {
     type: NodeType.ATTACK_VECTOR, // T274
-    desc: "Social engineering (malicious files, malvertising, phishing, drive-by download attack)",
+    desc:
+      "Social engineering (malicious files, malvertising, phishing, drive-by download attack)",
     cvssScore: TH_SOCIAL_ENGINEERING,
   },
   {
@@ -3579,7 +3576,8 @@ export const attacks: Node[] = [
   },
   {
     type: NodeType.ATTACK_VECTOR, // T279
-    desc: "Social engineering (malicious files, malvertising, phishing, drive-by download attack)",
+    desc:
+      "Social engineering (malicious files, malvertising, phishing, drive-by download attack)",
     cvssScore: TH_SOCIAL_ENGINEERING,
   },
   {
@@ -3604,7 +3602,8 @@ export const attacks: Node[] = [
   },
   {
     type: NodeType.ATTACK_VECTOR, // T284
-    desc: "Social engineering (malicious files, malvertising, phishing, drive-by download attack)",
+    desc:
+      "Social engineering (malicious files, malvertising, phishing, drive-by download attack)",
     cvssScore: TH_SOCIAL_ENGINEERING,
   },
   {
@@ -3644,7 +3643,8 @@ export const attacks: Node[] = [
   },
   {
     type: NodeType.ATTACK_VECTOR, // T292
-    desc: "Social engineering (malicious files, malvertising, phishing, drive-by download attack)",
+    desc:
+      "Social engineering (malicious files, malvertising, phishing, drive-by download attack)",
     cvssScore: TH_SOCIAL_ENGINEERING,
   },
   {
@@ -3744,12 +3744,14 @@ export const attacks: Node[] = [
   },
   {
     type: NodeType.ATTACK_VECTOR, // T312
-    desc: "Obtain auth credentials using a malware (keylogger, screen recorder, trojan)",
+    desc:
+      "Obtain auth credentials using a malware (keylogger, screen recorder, trojan)",
     cvssScore: TH_INSTALL_MALWARE,
   },
   {
     type: NodeType.ATTACK_VECTOR, // T313
-    desc: "Social engineering (malicious files, malvertising, phishing, drive-by download attack)",
+    desc:
+      "Social engineering (malicious files, malvertising, phishing, drive-by download attack)",
     cvssScore: TH_SOCIAL_ENGINEERING,
   },
   {
@@ -3774,7 +3776,8 @@ export const attacks: Node[] = [
   },
   {
     type: NodeType.ATTACK_VECTOR, // T318
-    desc: "Social engineering (malicious files, malvertising, phishing, drive-by download attack)",
+    desc:
+      "Social engineering (malicious files, malvertising, phishing, drive-by download attack)",
     cvssScore: TH_SOCIAL_ENGINEERING,
   },
   {
@@ -3799,7 +3802,8 @@ export const attacks: Node[] = [
   },
   {
     type: NodeType.ATTACK_VECTOR, // T323
-    desc: "Social engineering (malicious files, malvertising, phishing, drive-by download attack)",
+    desc:
+      "Social engineering (malicious files, malvertising, phishing, drive-by download attack)",
     cvssScore: TH_SOCIAL_ENGINEERING,
   },
   {
@@ -3824,7 +3828,8 @@ export const attacks: Node[] = [
   },
   {
     type: NodeType.ATTACK_VECTOR, // T328
-    desc: "Social engineering (malicious files, malvertising, phishing, drive-by download attack)",
+    desc:
+      "Social engineering (malicious files, malvertising, phishing, drive-by download attack)",
     cvssScore: TH_SOCIAL_ENGINEERING,
   },
   {
@@ -3863,145 +3868,144 @@ export const attacks: Node[] = [
     cvssScore: TH_IP_ADDR_SPOOFING,
   },
 
-
   // Test nodes
   {
     type: NodeType.ATTACK_VECTOR, // T336
     desc: "Social engineering",
-    cvssScore: isDefaultSecurity 
-      ? [AV.N, AC.L, PR.L, UI.R, TC.M, EX.P, EQ.S] 
+    cvssScore: isDefaultSecurity
+      ? [AV.N, AC.L, PR.L, UI.R, TC.M, EX.P, EQ.S]
       : [AV.L, AC.H, PR.L, UI.R, TC.M, EX.P, EQ.S],
   },
   {
     type: NodeType.ATTACK_VECTOR, // T337
     desc: "Rogue AP",
-    cvssScore: isDefaultSecurity 
+    cvssScore: isDefaultSecurity
       ? [AV.L, AC.L, PR.N, UI.R, TC.M, EX.P, EQ.S]
       : [AV.L, AC.L, PR.N, UI.R, TC.M, EX.P, EQ.S],
   },
   {
     type: NodeType.ATTACK_VECTOR, // T338
     desc: "Supply chain attack",
-    cvssScore: isDefaultSecurity 
+    cvssScore: isDefaultSecurity
       ? [AV.N, AC.H, PR.N, UI.R, TC.M, EX.E, EQ.S]
       : [AV.L, AC.H, PR.N, UI.R, TC.M, EX.E, EQ.S],
   },
   {
     type: NodeType.ATTACK_VECTOR, // T339
     desc: "Removable media",
-    cvssScore: isDefaultSecurity 
+    cvssScore: isDefaultSecurity
       ? [AV.P, AC.H, PR.N, UI.N, TC.N, EX.L, EQ.S]
       : [AV.P, AC.H, PR.N, UI.N, TC.N, EX.L, EQ.S],
   },
   {
     type: NodeType.ATTACK_VECTOR, // T340
     desc: "Execute keylogging attack",
-    cvssScore: isDefaultSecurity 
+    cvssScore: isDefaultSecurity
       ? [AV.N, AC.L, PR.L, UI.R, TC.N, EX.L, EQ.S]
       : [AV.L, AC.L, PR.L, UI.R, TC.N, EX.L, EQ.S],
   },
   {
     type: NodeType.ATTACK_VECTOR, // T341
     desc: "Shoulder-surfing attack",
-    cvssScore: isDefaultSecurity 
+    cvssScore: isDefaultSecurity
       ? [AV.P, AC.H, PR.N, UI.R, TC.N, EX.L, EQ.S]
       : [AV.P, AC.H, PR.N, UI.R, TC.N, EX.L, EQ.S],
   },
   {
     type: NodeType.ATTACK_VECTOR, // T342
     desc: "Brute-force attack",
-    cvssScore: isDefaultSecurity 
+    cvssScore: isDefaultSecurity
       ? [AV.P, AC.L, PR.N, UI.N, TC.E, EX.L, EQ.P]
       : [AV.P, AC.L, PR.N, UI.N, TC.E, EX.L, EQ.P],
   },
   {
     type: NodeType.ATTACK_VECTOR, // T343
     desc: "Buffer over flow",
-    cvssScore: isDefaultSecurity 
+    cvssScore: isDefaultSecurity
       ? [AV.A, AC.H, PR.N, UI.N, TC.H, EX.E, EQ.S]
       : [AV.L, AC.H, PR.N, UI.N, TC.H, EX.E, EQ.S],
   },
   {
     type: NodeType.ATTACK_VECTOR, // T344
     desc: "Evil maid attack",
-    cvssScore: isDefaultSecurity 
+    cvssScore: isDefaultSecurity
       ? [AV.P, AC.H, PR.N, UI.N, TC.M, EX.E, EQ.S]
       : [AV.P, AC.H, PR.N, UI.N, TC.M, EX.E, EQ.S],
   },
   {
     type: NodeType.ATTACK_VECTOR, // T345
     desc: "Fake biometrics",
-    cvssScore: isDefaultSecurity 
+    cvssScore: isDefaultSecurity
       ? [AV.P, AC.H, PR.N, UI.N, TC.N, EX.P, EQ.P]
       : [AV.P, AC.H, PR.N, UI.N, TC.N, EX.P, EQ.P],
   },
   {
     type: NodeType.ATTACK_VECTOR, // T346
     desc: "Physical access when the host is open",
-    cvssScore: isDefaultSecurity 
+    cvssScore: isDefaultSecurity
       ? [AV.P, AC.H, PR.N, UI.N, TC.N, EX.L, EQ.S]
       : [AV.P, AC.H, PR.N, UI.N, TC.N, EX.L, EQ.S],
   },
   {
     type: NodeType.ATTACK_VECTOR, // T347
     desc: "Shoulder-surfing attack",
-    cvssScore: isDefaultSecurity 
+    cvssScore: isDefaultSecurity
       ? [AV.P, AC.H, PR.N, UI.R, TC.N, EX.L, EQ.S]
       : [AV.P, AC.H, PR.N, UI.R, TC.N, EX.L, EQ.S],
   },
   {
     type: NodeType.ATTACK_VECTOR, // T348
     desc: "Physical attack",
-    cvssScore: isDefaultSecurity 
+    cvssScore: isDefaultSecurity
       ? [AV.P, AC.H, PR.N, UI.N, TC.M, EX.E, EQ.P]
       : [AV.P, AC.H, PR.N, UI.N, TC.E, EX.E, EQ.B],
   },
   {
     type: NodeType.ATTACK_VECTOR, // T349
     desc: "Brute-force attack",
-    cvssScore: isDefaultSecurity 
+    cvssScore: isDefaultSecurity
       ? [AV.P, AC.L, PR.N, UI.N, TC.E, EX.L, EQ.P]
       : [AV.P, AC.L, PR.N, UI.N, TC.E, EX.L, EQ.P],
   },
   {
     type: NodeType.ATTACK_VECTOR, // T350
     desc: "Buffer over flow",
-    cvssScore: isDefaultSecurity 
+    cvssScore: isDefaultSecurity
       ? [AV.A, AC.H, PR.N, UI.N, TC.H, EX.E, EQ.S]
       : [AV.L, AC.H, PR.N, UI.N, TC.H, EX.E, EQ.S],
   },
   {
     type: NodeType.ATTACK_VECTOR, // T351
     desc: "Evil maid attack",
-    cvssScore: isDefaultSecurity 
+    cvssScore: isDefaultSecurity
       ? [AV.P, AC.H, PR.N, UI.N, TC.M, EX.E, EQ.S]
       : [AV.P, AC.H, PR.N, UI.N, TC.M, EX.E, EQ.S],
   },
   {
     type: NodeType.ATTACK_VECTOR, // T352
     desc: "Fake biometrics",
-    cvssScore: isDefaultSecurity 
+    cvssScore: isDefaultSecurity
       ? [AV.P, AC.H, PR.N, UI.N, TC.N, EX.P, EQ.P]
       : [AV.P, AC.H, PR.N, UI.N, TC.N, EX.P, EQ.P],
   },
   {
     type: NodeType.ATTACK_VECTOR, // T353
     desc: "Physical access when the host is open",
-    cvssScore: isDefaultSecurity 
+    cvssScore: isDefaultSecurity
       ? [AV.P, AC.H, PR.N, UI.N, TC.N, EX.L, EQ.S]
       : [AV.P, AC.H, PR.N, UI.N, TC.N, EX.L, EQ.S],
   },
   {
     type: NodeType.ATTACK_VECTOR, // T354
     desc: "Shoulder-surfing attack",
-    cvssScore: isDefaultSecurity 
+    cvssScore: isDefaultSecurity
       ? [AV.P, AC.H, PR.N, UI.R, TC.N, EX.L, EQ.S]
       : [AV.P, AC.H, PR.N, UI.R, TC.N, EX.L, EQ.S],
   },
   {
     type: NodeType.ATTACK_VECTOR, // T355
     desc: "Physical attack",
-    cvssScore: isDefaultSecurity 
+    cvssScore: isDefaultSecurity
       ? [AV.P, AC.H, PR.N, UI.N, TC.M, EX.E, EQ.P]
       : [AV.P, AC.H, PR.N, UI.N, TC.E, EX.E, EQ.B],
   },
@@ -4279,86 +4283,113 @@ export const generateAttackTree = (
   return result;
 };
 
-const getCptForParents = (parentIds: string[], isAndNode: boolean): ICptWithoutParents | ICptWithParents => {
+const getCptForParents = (
+  parentIds: string[],
+  isAndNode: boolean,
+): ICptWithoutParents | ICptWithParents => {
   let count = 0;
   const cpt: ICptWithoutParents | ICptWithParents = [];
   let isFirst = true;
-  
-  parentIds.forEach(()=> {
+
+  parentIds.forEach(() => {
     count = count << 1;
     count = count + 1;
   });
 
-  // AND node
   if (isAndNode) {
-    while(count >= 0) {
+    // AND node
+    while (count >= 0) {
       const when: Record<string, string> = {};
-      for (let i=0; i<parentIds.length; i++) {
+      for (let i = 0; i < parentIds.length; i++) {
         const posVal = 1 << i;
-        when[parentIds[i]] = (posVal & count) === 0 ? "F" : "T";
+        Object.assign(when, {
+          [parentIds[i]]: (posVal & count) === 0 ? "F" : "T",
+        });
+        //when[parentIds[i]] = (posVal & count) === 0 ? "F" : "T";
       }
       if (isFirst === true) {
-        cpt.push({ when: when, then: {T: 1.0, F: 0.0}});
+        cpt.push({ when, then: { T: 1.0, F: 0.0 } });
         isFirst = false;
-      }
-      else
-        cpt.push({ when: when, then: {T: 0.0, F: 1.0}});
+      } else cpt.push({ when, then: { T: 0.0, F: 1.0 } });
       count--;
     }
-  }
-  else {
+  } else {
     // OR node
-    while(count >= 0) {
+    while (count >= 0) {
       const when: Record<string, string> = {};
-      for (let i=0; i<parentIds.length; i++) {
+      for (let i = 0; i < parentIds.length; i++) {
         const posVal = 1 << i;
-        when[parentIds[i]] = (posVal & count) === 0 ? "F" : "T";
+        Object.assign(when, {
+          [parentIds[i]]: (posVal & count) === 0 ? "F" : "T",
+        });
+        // when[parentIds[i]] = (posVal & count) === 0 ? "F" : "T";
       }
-      if (count !== 0)
-        cpt.push({ when: when, then: {T: 1.0, F: 0.0}});
-      else
-        cpt.push({ when: when, then: {T: 0.0, F: 1.0}});
+      if (count !== 0) cpt.push({ when, then: { T: 1.0, F: 0.0 } });
+      else cpt.push({ when, then: { T: 0.0, F: 1.0 } });
       count--;
     }
   }
   return cpt;
 };
 
-export const addBNInfo = (attackTree: RawNodeDatum, network: INetwork): BNNodeDatum => {
+export const addBNInfo = (
+  attackTree: RawNodeDatum,
+  networkContainer: NetworkContainer,
+): BNNodeDatum => {
   // if already registered in the BN nodes then just add the parent and skip.
-  
+
   if (attackTree.children) {
-    const isAndNode: boolean = attackTree.name === "AND" ? true : false;
+    const isAndNode =
+      (attackTree.attributes as any)["type"] === "AND" ? true : false;
     const parentIds: string[] = attackTree.children.map((childTree): string => {
-      const parentBN = addBNInfo(childTree, network);
+      const parentBN = addBNInfo(childTree, networkContainer);
       return parentBN.id;
     });
 
+    const id: string = isAndNode ? attackTree.name + andCnt++ : attackTree.name;
+
     const bnNode: INode = {
-      id: isAndNode ? (attackTree.name + andCnt++) : attackTree.name,
-      states: ['T', 'F'],
+      id,
+      states: ["T", "F"],
       parents: parentIds,
       cpt: getCptForParents(parentIds, isAndNode),
     };
 
-    const result: BNNodeDatum  = Object.assign(attackTree, bnNode);
+    const result: BNNodeDatum = Object.assign(attackTree, bnNode);
 
-    network[result.id] = bnNode;
+    networkContainer.network = addNode(networkContainer.network, bnNode);
+    // networkContainer.network = Object.assign({}, networkContainer.network, {
+    //   [result.id]: bnNode
+    // });
     return result;
-  }
-  else {
+  } else {
     const attrs = attackTree.attributes as Record<string, string>;
     const calculated: number = Number(attrs["calculated"]);
-  
+
     const bnNode: INode = {
       id: attackTree.name,
-      states: ['T', 'F'],
+      states: ["T", "F"],
       parents: [],
-      cpt: { T: calculated, F: Number((1.00 - calculated).toPrecision(2)) },
-    }
-    const result: BNNodeDatum  = Object.assign(attackTree, bnNode);
+      cpt: { T: calculated, F: Number((1.0 - calculated).toPrecision(2)) },
+    };
+    const result: BNNodeDatum = Object.assign(attackTree, bnNode);
 
-    network[result.id] = bnNode;
+    networkContainer.network = addNode(networkContainer.network, bnNode);
+    // networkContainer.network = Object.assign({}, networkContainer.network, {
+    //   [result.id]: bnNode
+    // });
     return result;
   }
-}
+};
+
+export const sortNetwork = (networkContainer: NetworkContainer) => {
+  const network = networkContainer.network;
+  const keys: string[] = Object.keys(network);
+  keys.sort((a, b) => a.localeCompare(b));
+
+  const newNetwork: INetwork = {};
+  keys.forEach((key) => {
+    newNetwork[key] = network[key];
+  });
+  networkContainer.network = newNetwork;
+};

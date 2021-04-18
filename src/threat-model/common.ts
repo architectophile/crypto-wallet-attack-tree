@@ -1,5 +1,5 @@
 import { RawNodeDatum } from "react-d3-tree/lib/types/common";
-import { INode } from 'bayesjs';
+import { INetwork, INode } from 'bayesjs';
 
 export enum NodeType {
   ROOT_GOAL,
@@ -73,3 +73,7 @@ export interface NewNodeDatum extends RawNodeDatum {
 }
 
 export type BNNodeDatum = RawNodeDatum & INode;
+
+export interface NetworkContainer {
+  network: INetwork
+}
